@@ -41,22 +41,22 @@ const resolvers = {
 		},
 		saveBook: async (parent, { book }, { user }) => {
 			if (!user) {
-				throw new AuthenticationError(
-					"You need to be logged in to save a book."
-				);
+			  throw new AuthenticationError(
+				"You need to be logged in to save a book."
+			  );
 			}
 			try {
-				const updatedUser = await User.findOneAndUpdate(
-					{ _id: user._id },
-					{ $addToSet: { savedBooks: book } },
-					{ new: true }
-				);
-				return updatedUser;
+			  const updatedUser = await User.findOneAndUpdate(
+				{ _id: user._id },
+				{ $addToSet: { savedBooks: book } },
+				{ new: true }
+			  );
+			  return updatedUser;
 			} catch (error) {
-				console.error(error);
-				throw new UserInputError("Something went wrong while saving the book.");
+			  console.error(error);
+			  throw new UserInputError("Something went wrong while saving the book.");
 			}
-		},
+		  },
 		removeBook: async (parent, { bookId }, { user }) => {
 			if (!user) {
 				throw new AuthenticationError(
